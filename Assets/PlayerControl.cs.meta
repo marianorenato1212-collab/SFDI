@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: f22b55cbf3a3b6a4a954541d0c8ee8e1
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - prefab: {instanceID: 0}
+  - steps_panel: {fileID: 3063259947263093136, guid: 9b8581950b2a3e44d8d982b91f61d44f, type: 3}
+  - prefab2: {instanceID: 0}
+  - steps_panel2: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
