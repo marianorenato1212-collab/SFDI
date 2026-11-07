@@ -9,28 +9,59 @@ public class Door : MonoBehaviour
 
     int gemsCount = 0;
     bool doorOpen = false;
+    bool playerNearby = false;
+
+    private void Update()
+    {
+        if (playerNearby)
+        {
+            if (Input.GetKeyDown(KeyCode.UpArrow))
+            {
+                Debug.Log("¡Tecla arriba detectada!");
+
+                if (doorOpen)
+                {
+                    Debug.Log("¡Puerta abierta!");
+
+                    SceneManager.LoadScene(nextScene);
+                }
+            }
+        }
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        // Si colocamos una gema
+        // Detectar las gemas
         if (collision.CompareTag("Gem"))
         {
-            gems[gemsCount].color = Color.white;
-            gemsCount++;
+            if (gemsCount < gems.Length)
+            {
+                gems[gemsCount].color = Color.white;
+                gemsCount++;
 
-            Destroy(collision.gameObject);
+                Destroy(collision.gameObject);
+            }
 
-            // Si tenemos las 3 gemas
+            // Si conseguimos las 3 gemas
             if (gemsCount >= 3)
             {
                 OpenDoor();
             }
         }
 
-        // Si el jugador entra a la puerta y está abierta
-        if (collision.CompareTag("Player") && doorOpen)
+        // Detectar al jugador
+        if (collision.CompareTag("Player"))
         {
-            SceneManager.LoadScene(nextScene);
+            playerNearby = true;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        // Si el jugador se aleja de la puerta
+        if (collision.CompareTag("Player"))
+        {
+            playerNearby = false;
         }
     }
 
@@ -38,10 +69,8 @@ public class Door : MonoBehaviour
     {
         doorOpen = true;
 
-        // Cambia el color de la puerta
         GetComponent<SpriteRenderer>().color = Color.black;
 
-        // Quita el bloqueo
         if (doorBlocker != null)
         {
             doorBlocker.enabled = false;
